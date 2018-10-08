@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1538998799 source:c:\users\leona\desktop\codeweas\parcialtryme\main.c
+	<stdio.h>
+	<stdlib.h>
+	"peliculas.c"
+	"peliculas.h"
+	"directores.c"
+	"validaciones.h"
+
+1538956769 c:\users\leona\desktop\codeweas\parcialtryme\validaciones.h
+
+1538998582 c:\users\leona\desktop\codeweas\parcialtryme\peliculas.h
+
+1538998645 c:\users\leona\desktop\codeweas\parcialtryme\peliculas.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"validaciones.c"
+	"directores.h"
+	"peliculas.h"
+
+1538994948 c:\users\leona\desktop\codeweas\parcialtryme\validaciones.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"validaciones.h"
+
+1538997495 c:\users\leona\desktop\codeweas\parcialtryme\directores.h
+
+1538998918 c:\users\leona\desktop\codeweas\parcialtryme\directores.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"directores.h"
+
