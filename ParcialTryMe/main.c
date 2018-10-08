@@ -29,13 +29,21 @@ int main()
         switch(opcion)
         {
             case 1:
-                if(cargarPeliculas(peliculasMain,MAX_PELICULAS)==0)
+                if(banderaD==1)
                 {
-                    banderaP=1;
+                    if(cargarPeliculas(peliculasMain,MAX_PELICULAS,directoresMain,MAX_DIRECTORES)==0)
+                    {
+                        banderaP=1;
+                    }
+                    else
+                    {
+                        printf("Error, intente nuevamente!\n");
+                        banderaP=-1;
+                    }
                 }
                 else
                 {
-                    banderaP=-1;
+                    printf("debe cargar un director primero!!\n");
                 }
                 break;
             case 2:
@@ -76,14 +84,8 @@ int main()
                 }
                 break;
             case 6:
-                if(banderaP==1 && banderaD==1)
-                {
-                    opcionesInformar(peliculasMain, MAX_PELICULAS,directoresMain, MAX_DIRECTORES);
-                }
-                else
-                {
-                    printf("Falta cargar algun dato (pelicula/director)\n");
-                }
+
+                opcionesInformar(peliculasMain, MAX_PELICULAS, banderaP,directoresMain, MAX_DIRECTORES,banderaD);
                 break;
             case 7:
                 printf("Saliendo....Que tenga buen dia!!!");

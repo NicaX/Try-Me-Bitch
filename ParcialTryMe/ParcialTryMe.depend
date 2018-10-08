@@ -36,3 +36,40 @@
 	<string.h>
 	"directores.h"
 
+1539011284 source:c:\users\alumno\desktop\parcialtryme\main.c
+	<stdio.h>
+	<stdlib.h>
+	"peliculas.c"
+	"peliculas.h"
+	"directores.c"
+	"validaciones.h"
+
+1539010551 c:\users\alumno\desktop\parcialtryme\peliculas.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"validaciones.c"
+	"directores.h"
+	"peliculas.h"
+
+1538999160 c:\users\alumno\desktop\parcialtryme\validaciones.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"validaciones.h"
+
+1538999160 c:\users\alumno\desktop\parcialtryme\validaciones.h
+
+1539011317 c:\users\alumno\desktop\parcialtryme\directores.h
+
+1539010464 c:\users\alumno\desktop\parcialtryme\peliculas.h
+
+1539011572 c:\users\alumno\desktop\parcialtryme\directores.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"directores.h"
+

@@ -34,7 +34,7 @@ void menuPrincipal();
  * \return int  -1 en caso de error y 0 en caso de exito
  *
  */
-int cargarPeliculas(ePelicula arrayPeliculas[],int cantidad);
+int cargarPeliculas(ePelicula arrayPeliculas[],int cantidad, eDirector arrayDirectores[], int cantidadDirectores);
 
 /** \brief Toma los datos de un empleado para darlo de alta
  *
@@ -44,7 +44,7 @@ int cargarPeliculas(ePelicula arrayPeliculas[],int cantidad);
  * \return int  Devuelve -1 en caso de error y 0 si se logra completar
  *
  */
-int cargarUnaPelicula(ePelicula arrayPeliculas[],int vacio,int cantidad);
+int cargarUnaPelicula(ePelicula arrayPeliculas[],int vacio,int cantidad, eDirector arrayDirectores[],int cantidadDirectores);
 
 /** \brief Busca el primer espacio vacio en el array
  *
@@ -92,7 +92,11 @@ int mostrarPeliculas(ePelicula arrayPeliculas[],int cantidad);
  */
 int borrarPelicula(ePelicula arrayPeliculas[],int cantidad);
 
+void pelisHardcode(ePelicula arrayPeliculas[]);
+
+int opcionesInformar(ePelicula arrayPeliculas[],int cantidadPeliculas, int flagP, eDirector arrayDirectores[], int cantidadDirectores, int flagD);
+
+void mostrarPeliculasConDirector(ePelicula arrayPeliculas[], int cantidadPeliculas, eDirector arrayDirectores[], int cantidadDirectores);
 
 
-int opcionesInformar(ePelicula arrayPeliculas[],int cantidadPeliculas, eDirector arrayDirectores[], int cantidadDirectores);
 #endif // PELICULAS_H_INCLUDED

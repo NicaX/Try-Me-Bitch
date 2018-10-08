@@ -11,6 +11,7 @@ typedef struct
 
 typedef struct
 {
+    int idDirector;
     char nombre[51];
     eFecha nacimiento;
     char paisOrigen[51];
@@ -41,4 +42,6 @@ int removerDirector(eDirector arrayDirectores[], int cantidad, char nombre[]);
 int mostrarUnDirector(eDirector arrayDirectores[], int indice);
 
 int mostrarTodosLosDirectores(eDirector arrayDirectores[], int cantidad);
+
+void directoresHardcode(eDirector arrayDirectores[], eFecha fecha[]);
 #endif // DIRECTORES_H_INCLUDED

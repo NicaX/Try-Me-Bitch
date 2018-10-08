@@ -6,7 +6,14 @@
 
 
 
+static int generarIdDirector()
+{
+    static int id=0;
 
+    id ++;
+
+    return id;
+}
 void inicializarDirectores(eDirector arrayDirectores[],int cantidad)
 {
     int i;
@@ -56,6 +63,7 @@ int altaDirector(eDirector arrayDirectores[], int cantidad)
     int lugarLibre = buscarDirectorLibre(arrayDirectores, cantidad);
     int retorno=-1;
     int comparacion;
+    int auxId;
     //char auxNombre[51];
     //char auxNacionalidad[51];
     //int auxAnio;
@@ -77,7 +85,9 @@ int altaDirector(eDirector arrayDirectores[], int cantidad)
             }
             else
             {
-                            //Tiene que ser unico
+
+            auxId=generarIdDirector();
+            auxiliarDirector.idDirector=auxId;
             getValidString("Ingrese pais de origen del director: ", "Error, no valido.", auxiliarDirector.paisOrigen);
             auxiliarDirector.nacimiento.dia = getValidInt("Ingrese dia: ","Error, dia no valido.", 1, 31);
             auxiliarDirector.nacimiento.mes = getValidInt("Ingrese mes: ","Error, mes no valido.", 1, 12);
@@ -153,7 +163,12 @@ int mostrarUnDirector(eDirector arrayDirectores[], int indice)
     {
         if(arrayDirectores[indice].isEmpty==0)
         {
-           printf("%s\t    %s\t    \t%d/%d/%d\n", arrayDirectores[indice].nombre, arrayDirectores[indice].paisOrigen, arrayDirectores[indice].nacimiento.dia, arrayDirectores[indice].nacimiento.mes, arrayDirectores[indice].nacimiento.anio);
+
+           printf("%3d %15s %15s %8d/%2d/%2d\n",arrayDirectores[indice].idDirector,
+                   arrayDirectores[indice].nombre, arrayDirectores[indice].paisOrigen,
+                   arrayDirectores[indice].nacimiento.dia,
+                   arrayDirectores[indice].nacimiento.mes,
+                   arrayDirectores[indice].nacimiento.anio);
            retorno=0;
         }
     }
@@ -167,7 +182,7 @@ int mostrarTodosLosDirectores(eDirector arrayDirectores[], int cantidad)
     int i;
     if(arrayDirectores!= NULL)
     {
-        printf("NOMBRE\t    PAIS DE ORIGEN\t    FECHA DE NACIMIENTO\n");
+        printf("\n%3s %15s %15s %17s\n","Id", "Nombre", "Pais Origen", "Nacimiento");
         for( i=0; i<cantidad ; i ++ )
         {
             if(arrayDirectores[i].isEmpty == 0)
@@ -178,4 +193,28 @@ int mostrarTodosLosDirectores(eDirector arrayDirectores[], int cantidad)
         }
     }
     return retorno;
+}
+
+
+void directoresHardcode(eDirector arrayDirectores[], eFecha fecha[])
+{
+    int i;
+    int id[3]={1,2,3};
+    char nombre[][51]={"Julio","Steven","Julio"};
+    int dia[]={1,20,1};
+    int mes[]={9,12,9};
+    int anio[]={1960,1980,1960};
+    char paisOrigen[][51]={"mex", "eeuu", "mex"};
+
+    for(i=0;i<3;i++)
+    {
+        arrayDirectores[i].idDirector=id[i];
+        arrayDirectores[i].nacimiento.anio=anio[i];
+        arrayDirectores[i].nacimiento.mes=mes[i];
+        arrayDirectores[i].nacimiento.dia=dia[i];
+        strcpy(arrayDirectores[i].nombre,nombre[i]);
+        strcpy(arrayDirectores[i].paisOrigen,paisOrigen[i]);
+
+    }
+
 }

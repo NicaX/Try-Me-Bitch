@@ -14,7 +14,35 @@ void inicializarArray(ePelicula arrayPeliculas[],int cantidad)
         arrayPeliculas[i].isEmpty = 1;
     }
 }
+void pelisHardcode(ePelicula arrayPeliculas[])
+{
+    int i;
+    int id[3]={1,2,3};
+    char hardTitulo[][51]={"PeliUno","PeliDos","PeliTres"};
+    int hardAnio[]={1990,1992,2000};
+    char hardNacionalidad[][51]={"arg", "ing", "arg"};
+    char hardNombreDirector[][51]={"Julio","Steven","Julio"};
 
+    for(i=0;i<3;i++)
+    {
+        arrayPeliculas[i].id=id[i];
+        arrayPeliculas[i].anio=hardAnio[i];
+        strcpy(arrayPeliculas[i].titulo,hardTitulo[i]);
+        strcpy(arrayPeliculas[i].nacionalidad,hardNacionalidad[i]);
+        strcpy(arrayPeliculas[i].nombreDirector,hardNombreDirector[i]);
+
+    }
+
+}
+
+static int generarIdPelicula()
+{
+    static int id=0;
+
+    id ++;
+
+    return id;
+}
 void menuPrincipal()
 {
     printf("\n*********Bienvenido**********\n\n-------------------------\n1.Dar de alta una pelicula.\n2."
@@ -23,11 +51,11 @@ void menuPrincipal()
            "Ingrese una opcion: ");
 }
 
-int cargarPeliculas(ePelicula arrayPeliculas[],int cantidad)//listo
+int cargarPeliculas(ePelicula arrayPeliculas[],int cantidad, eDirector arrayDirectores[], int cantidadDirectores)//listo
 {
     int retorno=0;
         system("cls");
-        if(cargarUnaPelicula(arrayPeliculas,buscarLibre(arrayPeliculas,cantidad),cantidad) == -1)
+        if(cargarUnaPelicula(arrayPeliculas,buscarLibre(arrayPeliculas,cantidad),cantidad,arrayDirectores,cantidadDirectores) == -1)
         {
 
             retorno=-1;
@@ -36,23 +64,18 @@ int cargarPeliculas(ePelicula arrayPeliculas[],int cantidad)//listo
     return retorno;
 }
 
-static int generateNextId ()
-{
-    static int id=0;
 
-    id ++;
-
-    return id;
-}
-
-int cargarUnaPelicula(ePelicula arrayPeliculas[],int vacio,int cantidad)//listo
+int cargarUnaPelicula(ePelicula arrayPeliculas[],int vacio,int cantidad, eDirector arrayDirectores[],int cantidadDirectores)//listo
 {
     int retorno = -1;
     int auxId;
+
+    int comparacion;
+    eDirector auxNombredirector;
+
     char auxTitulo[51];
     int auxAnio;
     char auxNacionalidad[51];
-    char auxDirector[51];
     if(retorno==-1)
     {
         /*
@@ -61,31 +84,37 @@ int cargarUnaPelicula(ePelicula arrayPeliculas[],int vacio,int cantidad)//listo
         char nacionalidad[51];
         char nombreDirector[51];
         */
-        auxId=generateNextId();
-
+        auxId=generarIdPelicula();
         getValidString("\nIngrese titulo de la pelicula:\n", " Error, ingrese titulo de la pelicula nuevamente (solo letras):", auxTitulo);
 
         auxAnio=getValidInt("\nIngrese anio de la pelicula:\n"," Error, ingrese anio de la pelicula nuevamente (solo numero):\n", 1800, 2018);
 
         getValidString("\nIngrese nacionalidad de la pelicula:\n", " Error, ingrese nacionalidad de la pelicula nuevamente (solo letras):", auxNacionalidad);
 
-        getValidString("\nIngrese nombre del director:\n", " Error, ingrese nombre del director nuevamente (solo letras):", auxDirector);
+        getValidString("Ingrese nombre del director: ", "Error, no valido.", auxNombredirector.nombre);
+        comparacion=buscarDirectorPorNombre(arrayDirectores, cantidadDirectores, auxNombredirector.nombre);
+        //getValidString("\nIngrese nombre del director:\n", " Error, ingrese nombre del director nuevamente (solo letras):", auxDirector);
 
+        if(comparacion!=-1)
+        {
+            arrayPeliculas[vacio].id=auxId;
+            strcpy(arrayPeliculas[vacio].titulo, auxTitulo);
+            arrayPeliculas[vacio].anio=auxAnio;
+            strcpy(arrayPeliculas[vacio].nacionalidad, auxNacionalidad);
+            strcpy(arrayPeliculas[vacio].nombreDirector, auxNombredirector.nombre);
 
-        arrayPeliculas[vacio].id=auxId;
-        strcpy(arrayPeliculas[vacio].titulo, auxTitulo);
-        arrayPeliculas[vacio].anio=auxAnio;
-        strcpy(arrayPeliculas[vacio].nacionalidad, auxNacionalidad);
-        strcpy(arrayPeliculas[vacio].nombreDirector, auxDirector);
+            arrayPeliculas[vacio].isEmpty = 0;
+            printf("\nPelicula cargada con exito!\n");
+            retorno = 0;
+            }
+        else
+        {
+            printf("No existe un director con ese nombre!!!\n");
+            retorno= -1;
+        }
 
-        arrayPeliculas[vacio].isEmpty = 0;
-        retorno = 0;
     }
 
-    if(retorno==0)
-    {
-        printf("\nPelicula cargada con exito!\n");
-    }
 
 
     return retorno;
@@ -250,26 +279,49 @@ int borrarPelicula(ePelicula arrayPeliculas[],int cantidad)//listo
     return retorno;
 }
 
-int opcionesInformar(ePelicula arrayPeliculas[],int cantidadPeliculas, eDirector arrayDirectores[], int cantidadDirectores)
+int opcionesInformar(ePelicula arrayPeliculas[],int cantidadPeliculas, int flagP, eDirector arrayDirectores[], int cantidadDirectores, int flagD)
 {
     int retorno=-1;
     int elijaOpcion;
+
     if(arrayPeliculas!=NULL && arrayDirectores!=NULL)
     {
         printf("1. Mostrar peliculas\n");
         printf("2. Mostrar directores\n");
+        printf("3. Mostrar peliculas mas viejas\n");
+        printf("4. Mostrar peliculas con su director\n");
         printf("Elija la opcion: ");
         scanf("%d",&elijaOpcion);
     switch(elijaOpcion)
     {
     case 1:
-        mostrarPeliculas(arrayPeliculas, cantidadPeliculas);
+        if(flagP==1)
+        {
+            mostrarPeliculas(arrayPeliculas, cantidadPeliculas);
+        }
+        else
+        {
+            printf("aun no cargo ninguna pelicula!\n");
+        }
         break;
     case 2:
-        mostrarTodosLosDirectores(arrayDirectores, cantidadDirectores);
+        if(flagD==1)
+        {
+            mostrarTodosLosDirectores(arrayDirectores, cantidadDirectores);
+        }
+        else
+        {
+            printf("aun no cago ningun director\n");
+        }
+        break;
+    case 3:
+        break;
+    case 4:
+        mostrarPeliculasConDirector(arrayPeliculas,cantidadPeliculas,arrayDirectores,cantidadDirectores);
         break;
     default:
         printf("Opcion incorrecta!\n");
+        break;
     }
     retorno=0;
     }
@@ -277,3 +329,29 @@ int opcionesInformar(ePelicula arrayPeliculas[],int cantidadPeliculas, eDirector
     return retorno;
 
 }
+
+void mostrarPeliculasConDirector(ePelicula arrayPeliculas[], int cantidadPeliculas, eDirector arrayDirectores[], int cantidadDirectores)
+{
+    int i;
+    int j;
+    for (i=0; i<cantidadDirectores;i++)
+    {
+        if(arrayPeliculas[i].isEmpty==1 && arrayDirectores[i].isEmpty==1)
+        {
+            printf("La pelicula es:%s--",arrayPeliculas[i].titulo);
+
+            for(j=0;j<cantidadDirectores;j++)
+            {
+                if(arrayPeliculas[i].nombreDirector==arrayDirectores[j].nombre)
+                {
+                    printf(" y su director es:%s",arrayDirectores[j].nombre);
+                }
+            }
+            printf("\n");
+        }
+
+    }
+}
+
+
+
